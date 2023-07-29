@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import NotesTable from './components/NotesTable';
+import AddNoteForm from './components/AddNoteForm';
+import { useSelector } from 'react-redux';
+import { selectAllNotes } from './store/notesSlice';
 
-function App() {
+const App: React.FC = () => {
+  // Припустимо, у вашому сторі є стан зі списком нотаток:
+  const notes = useSelector(selectAllNotes);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div>
+        <h2>Notes</h2>
+        <AddNoteForm />
+        <NotesTable notes={notes}/>
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;
