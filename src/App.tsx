@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import NotesTable from './components/noteTables/ActiveNotesTable';
-import EditNoteForm from './components/noteTables/EditNoteForm';
-import SummeryTable from './components/summaryTable/SummaryTable';
-import ArchiveNotesTable from './components/noteTables/ArchivedNotesTable';
+import ActiveNotesTable from './components/noteTables/ActiveNotesTable';
+import NoteFormModal from './components/noteTables/NoteFormModal';
+import SummaryTable from './components/summaryTable/SummaryTable';
+import ArchivedNotesTable from './components/noteTables/ArchivedNotesTable';
 import Button from 'react-bootstrap/Button';
 
 const App: React.FC = () => {
@@ -10,11 +10,11 @@ const App: React.FC = () => {
 
   return (
       <div>
-        {open && <EditNoteForm onClose={() => setOpen(false)}/>}
-        <NotesTable />
+        {open && <NoteFormModal onClose={() => setOpen(false)}/>}
+        <ActiveNotesTable />
         <Button variant="primary" onClick={() => setOpen(true)}>Add new note</Button>
-        <SummeryTable />
-        <ArchiveNotesTable />
+        <SummaryTable />
+        <ArchivedNotesTable />
       </div>
   );
 };

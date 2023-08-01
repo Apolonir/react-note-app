@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAllActiveNotes } from '../../store/notesSlice';
-import EditNoteForm from './EditNoteForm';
+import EditNoteForm from './NoteFormModal';
 import { INote } from '../../types/note.type';
 import { Table } from '../Table';
 import NoteActionsButtons from './NoteActionsButtons';
