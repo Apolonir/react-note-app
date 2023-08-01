@@ -1,23 +1,21 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import store from './store/store';
+import React, { useState } from 'react';
 import NotesTable from './components/NotesTable';
-import AddNoteForm from './components/AddNoteForm';
-import { useSelector } from 'react-redux';
-import { selectAllNotes } from './store/notesSlice';
+import EditNoteForm from './components/EditNoteForm';
+import SummeryTable from './components/SummaryTable';
+import ArchiveNotesTable from './components/ArchiveNotesTable';
 
 const App: React.FC = () => {
-  // Припустимо, у вашому сторі є стан зі списком нотаток:
-  const notes = useSelector(selectAllNotes);
+  const [open, setOpen] = useState(false);
 
   return (
-    <Provider store={store}>
       <div>
         <h2>Notes</h2>
-        <AddNoteForm />
-        <NotesTable notes={notes}/>
+        {open && <EditNoteForm onClose={() => setOpen(false)}/>}
+        <NotesTable />
+        <button onClick={() => setOpen(true)}>Add new note</button>
+        <SummeryTable />
+        <ArchiveNotesTable />
       </div>
-    </Provider>
   );
 };
 

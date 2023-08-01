@@ -1,15 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-
-interface Note {
-  id: string;
-  createdAt: string;
-  content: string;
-  category: string;
-}
+import { INote } from '../types/note.type';
+import { extractDatesFromNoteContent } from '../utils/extractDatesFromNoteContent';
 
 interface NotesState {
-  notes: Note[];
+  notes: INote[];
 }
 
 const initialState: NotesState = {
@@ -20,24 +15,50 @@ const notesSlice = createSlice({
   name: 'notes',
   initialState,
   reducers: {
-    addNewNote: (state, action: PayloadAction<Note>) => {
-      state.notes.push(action.payload);
+    addNewNote: (state, action: PayloadAction<Partial<INote>>) => {
+      const dates = extractDatesFromNoteContent(action.payload.content || '');
+      const date = dates?.join(', ') || '';
+      state.notes.push({
+        id: new Date().getTime().toString(),
+        createdAt: new Date().toISOString(),
+        content: action.payload.content || "",
+        date: date || "",
+        category: action.payload.category || "Task",
+        type: "ACTIVE"
+      });
     },
-    editNote: (state, action: PayloadAction<{ noteId: string; updatedNote: Note }>) => {
-      const { noteId, updatedNote } = action.payload;
-      const noteIndex = state.notes.findIndex((note) => note.id === noteId);
-      if (noteIndex !== -1) {
-        state.notes[noteIndex] = updatedNote;
-      }
+    editNote: (state, action: PayloadAction<INote>) => {
+      const { payload: updatedNote } = action;
+      const dates = extractDatesFromNoteContent(updatedNote.content || '');
+      const date = dates?.join(', ') || '';
+      updatedNote.date = date;
+      state.notes
+        .forEach((note, index) => note.id === updatedNote.id && (state.notes[index] = updatedNote));
     },
-    deleteNote: (state, action: PayloadAction<string>) => {
+    deleteNote: (state, action: PayloadAction<INote['id']>) => {
       const noteId = action.payload;
       state.notes = state.notes.filter((note) => note.id !== noteId);
     },
+    archiveNote: (state, action: PayloadAction<INote['id']>) => {
+      const noteId = action.payload;
+      const noteToArchive = state.notes.find((note) => note.id === noteId);
+      if (noteToArchive) {
+        noteToArchive.type = "ARCHIVED";
+      }
+    },
+    unArchiveNote: (state, action: PayloadAction<INote['id']>) => {
+      const noteId = action.payload;
+      const noteToArchive = state.notes.find((note) => note.id === noteId);
+      if (noteToArchive) {
+        noteToArchive.type = "ACTIVE";
+      }
+    }
   },
 });
 
-export const { addNewNote, editNote, deleteNote } = notesSlice.actions;
+export const { addNewNote, editNote, deleteNote, archiveNote, unArchiveNote } = notesSlice.actions;
 export default notesSlice.reducer;
 
-export const selectAllNotes = (state: RootState) => state.notes.notes;
+export const selectAllNotes = (state: RootState): INote[] => state.notes.notes;
+export const selectAllActiveNotes = (state: RootState): INote[] => state.notes.notes.filter(note => note.type === "ACTIVE");
+export const selectAllArchivedNotes = (state: RootState): INote[] => state.notes.notes.filter(note => note.type === "ARCHIVED");
