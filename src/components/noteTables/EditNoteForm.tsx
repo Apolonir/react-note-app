@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addNewNote, editNote } from '../store/notesSlice';
-import { INote } from '../types/note.type';
+import { addNewNote, editNote } from '../../store/notesSlice';
+import { INote } from '../../types/note.type';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 

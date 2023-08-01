@@ -39,14 +39,14 @@ const notesSlice = createSlice({
       const noteId = action.payload;
       state.notes = state.notes.filter((note) => note.id !== noteId);
     },
-    archiveNote: (state, action: PayloadAction<INote['id']>) => {
+    archivedNote: (state, action: PayloadAction<INote['id']>) => {
       const noteId = action.payload;
       const noteToArchive = state.notes.find((note) => note.id === noteId);
       if (noteToArchive) {
         noteToArchive.type = "ARCHIVED";
       }
     },
-    unArchiveNote: (state, action: PayloadAction<INote['id']>) => {
+    unArchivedNote: (state, action: PayloadAction<INote['id']>) => {
       const noteId = action.payload;
       const noteToArchive = state.notes.find((note) => note.id === noteId);
       if (noteToArchive) {
@@ -56,7 +56,7 @@ const notesSlice = createSlice({
   },
 });
 
-export const { addNewNote, editNote, deleteNote, archiveNote, unArchiveNote } = notesSlice.actions;
+export const { addNewNote, editNote, deleteNote, archivedNote, unArchivedNote } = notesSlice.actions;
 export default notesSlice.reducer;
 
 export const selectAllNotes = (state: RootState): INote[] => state.notes.notes;

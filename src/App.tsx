@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import NotesTable from './components/NotesTable';
-import EditNoteForm from './components/EditNoteForm';
-import SummeryTable from './components/SummaryTable';
-import ArchiveNotesTable from './components/ArchiveNotesTable';
+import NotesTable from './components/noteTables/ActiveNotesTable';
+import EditNoteForm from './components/noteTables/EditNoteForm';
+import SummeryTable from './components/summaryTable/SummaryTable';
+import ArchiveNotesTable from './components/noteTables/ArchivedNotesTable';
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false);

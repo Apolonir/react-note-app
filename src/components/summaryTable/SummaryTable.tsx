@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectAllNotes } from '../store/notesSlice';
-import { INotesCategorySummary, NoteCategory } from '../types/note.type';
-import { ITableColumn, Table } from './Table';
+import { selectAllNotes } from '../../store/notesSlice';
+import { INotesCategorySummary, NoteCategory } from '../../types/note.type';
+import { ITableColumn, Table } from '../Table';
 
 const tableColumns: ITableColumn<INotesCategorySummary>[] = [
     { field: "category", label: "Category" },

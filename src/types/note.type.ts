@@ -15,4 +15,3 @@ export interface INotesCategorySummary {
     archived: number,
     category: NoteCategory,
 }
-
