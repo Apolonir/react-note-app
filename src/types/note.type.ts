@@ -2,7 +2,7 @@ export interface INote {
     id: string | number;
     createdAt: string;
     content: string;
-    date: string;
+    date?: string;
     category: NoteCategory;
     type: 'ARCHIVED' | 'ACTIVE';
 }
